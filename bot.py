@@ -710,6 +710,11 @@ app.add_handler(CommandHandler("account", account_command))
 app.add_handler(CommandHandler("settings", settings_command))
 app.add_handler(CallbackQueryHandler(callback_router))
 app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, text_router))
+app.add_handler(CommandHandler("admin", admin_panel))
+app.add_handler(CommandHandler("stats", stats_command))
+app.add_handler(CommandHandler("users", users_command))
+app.add_handler(CommandHandler("health", health_command))
+app.add_handler(CommandHandler("broadcast", broadcast_command))
 
 print("Wamalika AI Trading Bot Running...")
 
