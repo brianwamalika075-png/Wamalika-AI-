@@ -33,6 +33,26 @@ CREATE TABLE IF NOT EXISTS users(
 """)
 
 db.commit()
+def is_admin(user_id):
+    return user_id == ADMIN_ID
+
+
+def register_user(user_id):
+    cursor.execute(
+        "INSERT OR IGNORE INTO users(user_id) VALUES(?)",
+        (user_id,)
+    )
+    db.commit()
+
+
+def user_count():
+    cursor.execute("SELECT COUNT(*) FROM users")
+    return cursor.fetchone()[0]
+
+
+def get_all_users():
+    cursor.execute("SELECT user_id FROM users")
+    return [row[0] for row in cursor.fetchall()]
 
 
 def get_profile(context: ContextTypes.DEFAULT_TYPE):
