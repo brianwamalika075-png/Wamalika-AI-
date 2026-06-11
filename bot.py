@@ -21,6 +21,19 @@ BOT_TOKEN = os.getenv("BOT_TOKEN")
 if not BOT_TOKEN:
     raise ValueError("BOT_TOKEN not found")
 
+ADMIN_ID = 8963076547  # Replace with your Telegram ID
+
+db = sqlite3.connect("wamalika.db", check_same_thread=False)
+cursor = db.cursor()
+
+cursor.execute("""
+CREATE TABLE IF NOT EXISTS users(
+    user_id INTEGER PRIMARY KEY
+)
+""")
+
+db.commit()
+
 
 def get_profile(context: ContextTypes.DEFAULT_TYPE):
     profile = context.user_data
