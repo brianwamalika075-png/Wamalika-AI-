@@ -85,6 +85,76 @@ PAIR_DECIMALS = {
     "USD/CHF": 5,
     "NZD/USD": 5,
 }
+async def admin_panel(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    if not is_admin(update.effective_user.id):
+        await update.message.reply_text("⛔ Access denied.")
+        return
+
+    await update.message.reply_text(
+        "👑 Wamalika Admin Panel\n\n"
+        "/stats\n"
+        "/users\n"
+        "/health\n"
+        "/broadcast <message>"
+    )
+
+
+async def stats_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    if not is_admin(update.effective_user.id):
+        return
+
+    await update.message.reply_text(
+        f"📊 Statistics\n\n"
+        f"Users: {user_count()}\n"
+        f"Status: Online ✅"
+    )
+
+
+async def users_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    if not is_admin(update.effective_user.id):
+        return
+
+    await update.message.reply_text(
+        f"👥 Registered Users: {user_count()}"
+    )
+
+
+async def health_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    if not is_admin(update.effective_user.id):
+        return
+
+    await update.message.reply_text(
+        "🟢 Bot Status: Online"
+    )
+
+
+async def broadcast_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    if not is_admin(update.effective_user.id):
+        return
+
+    if not context.args:
+        await update.message.reply_text(
+            "Usage:\n/broadcast message"
+        )
+        return
+
+    message = " ".join(context.args)
+
+    sent = 0
+
+    for uid in get_all_users():
+        try:
+            await context.bot.send_message(
+                uid,
+                f"📢 {message}"
+            )
+            sent += 1
+        except Exception:
+            pass
+
+    await update.message.reply_text(
+        f"Broadcast sent to {sent} users."
+    )
 
 
 def main_keyboard():
