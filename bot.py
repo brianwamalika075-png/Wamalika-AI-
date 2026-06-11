@@ -500,9 +500,8 @@ def help_text():
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     get_profile(context)
-    await update.message.reply_text(
-        "🤖 Wamalika AI Trading Bot\n\nSelect an option below:",
-        reply_markup=main_keyboard(),
+
+    register_user(update.effective_user.id)
     )
 
 
