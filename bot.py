@@ -572,7 +572,6 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     get_profile(context)
 
     register_user(update.effective_user.id)
-    )
 
 
 async def menu_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
